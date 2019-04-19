@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Loc-O-Food</string>
+    <string name="soil_moisture_monitoring">Soil Moisture Monitoring</string>
+    <string name="control_the_pump_directly_with_this_switch">Control The Pump directly with this switch</string>
+    <string name="water_pump">Water Pump</string>
+    <string name="on_off">On/Off</string>
+    <string name="compost_moisture">Compost Moisture Monitoring</string>
+    <string name="temp">Compost Temperature Monitoring</string>
+</resources>

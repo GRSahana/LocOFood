@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:text="@string/compost_moisture"
+                android:textStyle="bold" />
+
+
+            <pl.pawelkleczkowski.customgauge.CustomGauge
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:padding="20dp"
+                android:id="@+id/compost_circular"
+                app:gaugePointStartColor="@color/colorAccent"
+                app:gaugePointEndColor="@color/colorAccent"
+                app:gaugeStartAngle="135"
+                app:gaugeStrokeCap="ROUND"
+                android:layout_gravity="center"
+                app:gaugeStrokeColor="@color/grey"
+                app:gaugeStrokeWidth="10dp"
+                app:gaugeStartValue="0"
+                app:gaugeEndValue="100"
+                app:gaugeSweepAngle="270"/>
+
+            <TextView
+                android:id="@+id/progress_compost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:text="@string/temp"
+                android:textStyle="bold" />
+
+            <pl.pawelkleczkowski.customgauge.CustomGauge
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:padding="20dp"
+                android:id="@+id/temp"
+                app:gaugePointStartColor="@color/colorAccent"
+                app:gaugePointEndColor="@color/colorAccent"
+                app:gaugeStartAngle="135"
+                app:gaugeStrokeCap="ROUND"
+                android:layout_gravity="center"
+                app:gaugeStrokeColor="@color/grey"
+                app:gaugeStrokeWidth="10dp"
+                app:gaugeStartValue="0"
+                app:gaugeEndValue="200"
+                app:gaugeSweepAngle="270"/>
+
+            <TextView
+                android:id="@+id/progress_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>
