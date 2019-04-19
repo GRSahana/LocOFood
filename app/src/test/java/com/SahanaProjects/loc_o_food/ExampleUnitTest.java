@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food;
+package com.SahanaProjects.loc_o_food;
 
 import org.junit.Test;
 

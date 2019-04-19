@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food.Helper;
+package com.SahanaProjects.loc_o_food.Helper;
 
 import android.app.AlertDialog;
 import android.content.Context;

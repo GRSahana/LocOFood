@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food;
+package com.SahanaProjects.loc_o_food;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ubikasoftwares.loc_o_food.Helper.CheckConnectivity;
+import com.SahanaProjects.loc_o_food.Helper.CheckConnectivity;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;

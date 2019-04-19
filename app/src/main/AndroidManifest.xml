@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ubikasoftwares.loc_o_food">
+    package="com.SahanaProjects.loc_o_food">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,15 +18,15 @@
         tools:ignore="GoogleAppIndexingWarning">
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name="com.SahanaProjects.loc_o_food.MainActivity"></activity>
+        <activity android:name="com.SahanaProjects.loc_o_food.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name="com.SahanaProjects.loc_o_food.HomeActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food.FragmentAdapter;
+package com.SahanaProjects.loc_o_food.FragmentAdapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

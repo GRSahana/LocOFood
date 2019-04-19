@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food;
+package com.SahanaProjects.loc_o_food;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ubikasoftwares.loc_o_food", appContext.getPackageName());
+        assertEquals("com.SahanaProjects.loc_o_food", appContext.getPackageName());
     }
 }

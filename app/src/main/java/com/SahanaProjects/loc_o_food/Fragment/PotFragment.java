@@ -1,4 +1,4 @@
-package com.ubikasoftwares.loc_o_food.Fragment;
+package com.SahanaProjects.loc_o_food.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.ubikasoftwares.loc_o_food.Helper.CheckConnectivity;
-import com.ubikasoftwares.loc_o_food.Helper.ProgressDialog;
-import com.ubikasoftwares.loc_o_food.R;
+
+import com.SahanaProjects.loc_o_food.Helper.CheckConnectivity;
+import com.SahanaProjects.loc_o_food.R;
+
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -22,17 +23,21 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.io.UnsupportedEncodingException;
+
 import pl.pawelkleczkowski.customgauge.CustomGauge;
 
-public class CompostFragment extends Fragment implements MqttCallback {
 
-    private static final String TAG = "CompostFragment";
-    CustomGauge progressBarMoist, progressBarTemp;
+public class PotFragment extends Fragment implements MqttCallback {
+
+    private static final String TAG = "PotFragment";
+    CustomGauge progressBar;
+    int setProgress = 0;
+    MqttAndroidClient client;
     CheckConnectivity checkConnectivity;
     boolean connect = false;
-    TextView tvProgressValue, tvProgressTemp;
-    MqttAndroidClient client;
-
+    TextView tvProgressValue;
+    Switch pumpSwitch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +48,12 @@ public class CompostFragment extends Fragment implements MqttCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_compost, container, false);
-        progressBarMoist = view.findViewById(R.id.compost_circular);
-        tvProgressValue = view.findViewById(R.id.progress_compost);
-        progressBarMoist.setValue(0);
-        progressBarTemp = view.findViewById(R.id.temp);
-        tvProgressTemp = view.findViewById(R.id.progress_temp);
-        progressBarTemp.setValue(0);
+        View view =  inflater.inflate(R.layout.fragment_pot, container, false);
+        progressBar = view.findViewById(R.id.progress_circular);
+        tvProgressValue = view.findViewById(R.id.progress_number);
+        progressBar.setValue(0);
 
+        pumpSwitch = view.findViewById(R.id.water_pump);
 
         String clientId = MqttClient.generateClientId();
 
@@ -71,10 +74,7 @@ public class CompostFragment extends Fragment implements MqttCallback {
             options.setCleanSession(true);
             options.setUserName("Jubin_KK");
             options.setPassword("4add8f6c1b9a493b866e3181a7be7009".toCharArray());
-
-
             try {
-                ProgressDialog.setProgressDialog(getContext());
                 IMqttToken token = client.connect(options);
                 client.setCallback(this);
                 token.setActionCallback(new IMqttActionListener() {
@@ -89,22 +89,42 @@ public class CompostFragment extends Fragment implements MqttCallback {
                     @Override
                     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                         // Something went wrong e.g. connection timeout or firewall problems
-                        ProgressDialog.hideProgressDialog();
-                        Log.d(TAG, "onFailure");
+                      Log.d(TAG, "onFailure");
 
                     }
                 });
             } catch (MqttException e) {
                 e.printStackTrace();
             }
-        }else {
-            Toast.makeText(getContext(), "Internet Connection Error", Toast.LENGTH_SHORT).show();
+
+            pumpSwitch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (pumpSwitch.isChecked())
+                        publishTopic("ON");
+                    else
+                        publishTopic("OFF");
+
+                }
+            });
         }
 
-            return view;
-
+        return view;
     }
 
+    private void publishTopic(String status) {
+
+        String topic = "Jubin_KK/feeds/manualwatering";
+        byte[] encodedPayload = new byte[0];
+        try {
+            encodedPayload = status.getBytes("UTF-8");
+            MqttMessage message = new MqttMessage(encodedPayload);
+            message.setRetained(true);
+            client.publish(topic, message);
+        } catch (UnsupportedEncodingException | MqttException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void subscribeToATopic() {
         String topic = "Jubin_KK/feeds/#";
@@ -118,14 +138,12 @@ public class CompostFragment extends Fragment implements MqttCallback {
                     String Message = asyncActionToken.toString();
                     Log.d("Subdcribed :",Message);
                     Toast.makeText(getContext(),Message,Toast.LENGTH_LONG).show();
-                    ProgressDialog.hideProgressDialog();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken,
                                       Throwable exception) {
-                    ProgressDialog.hideProgressDialog();
-                    exception.printStackTrace();
+                   exception.printStackTrace();
                     // The subscription could not be performed, maybe the user was not
                     // authorized to subscribe on the specified topic e.g. using wildcards
 
@@ -138,23 +156,25 @@ public class CompostFragment extends Fragment implements MqttCallback {
 
     @Override
     public void connectionLost(Throwable throwable) {
-        if(getContext()!=null)
-        Toast.makeText(getContext(),"MQTT Connection Lost",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"MQTT Connection Lost",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMsg) {
         String mqttMessage = mqttMsg.toString();
         Log.d("Subdcribed :",s + mqttMsg);
-        if(s.equals("Jubin_KK/feeds/compostmoisture")) {
-            progressBarMoist.setValue(Math.round(Float.parseFloat(mqttMessage)));
+        if(s.equals("Jubin_KK/feeds/soilmoisture")) {
+            progressBar.setValue(Math.round(Float.parseFloat(mqttMessage)));
             tvProgressValue.setText(mqttMessage);
         }
-        if(s.equals("Jubin_KK/feeds/temperature")){
-            Log.d("Subdcribed Temp:",s + mqttMsg);
-
-            progressBarTemp.setValue(Math.round(Float.parseFloat(mqttMessage)));
-            tvProgressTemp.setText(mqttMessage);
+        if(s.equals("Jubin_KK/feeds/manualwatering")){
+            if(mqttMessage.equals("ON")){
+                Log.d("Subdcribed1 :",s + mqttMsg);
+                pumpSwitch.setChecked(true);
+            }else if(mqttMessage.equals("OFF")){
+                Log.d("Subdcribed2 :",s + mqttMsg);
+                pumpSwitch.setChecked(false);
+            }
         }
     }
 

@@ -1,16 +1,14 @@
-package com.ubikasoftwares.loc_o_food;
+package com.SahanaProjects.loc_o_food;
 
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.support.design.widget.TabLayout;
 
-import com.ubikasoftwares.loc_o_food.Fragment.CompostFragment;
-import com.ubikasoftwares.loc_o_food.Fragment.PotFragment;
-import com.ubikasoftwares.loc_o_food.FragmentAdapter.ViewPagerAdapter;
+import com.SahanaProjects.loc_o_food.Fragment.CompostFragment;
+import com.SahanaProjects.loc_o_food.Fragment.PotFragment;
+import com.SahanaProjects.loc_o_food.FragmentAdapter.ViewPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
